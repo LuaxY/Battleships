@@ -1,0 +1,8 @@
+{
+  "name": "Battleships",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "4.x",
+    "socket.io": "1.x"
+  }
+}
