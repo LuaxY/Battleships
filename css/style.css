@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+}
+
+body, div {
+    margin: 0 auto;
+    padding: 0;
+}
+
+body {
+    background-color: #1C3003;
+    color: #B0E562;
+    font-family: monospace, verdana, arial, sans-serif;
+}
+
+.container {
+    width: 800px;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+#header h2,
+#game h3 {
+    text-align: center;
+}
+
+#game .side {
+    width: 50%;
+    padding: 10px;
+}
+
+.allies,
+.enemies {
+    border: 1px solid #0d1600;
+    box-shadow: 2px 2px 5px 0px #0d1600;
+}
