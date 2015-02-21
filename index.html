@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bataille Naval</title>
     <link href="css/style.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
     <div id="header" class="container">
@@ -13,13 +14,33 @@
         <div class="side pull-left">
             <div class="allies">
                 <h3>Mes navires</h3>
+                <div class="radar">
+                    <div class="overview"></div>
+                    <div class="board"></div>
+                </div>
+
             </div>
         </div>
         <div class="side pull-right">
             <div class="enemies">
                 <h3>Radar</h3>
+                <div class="radar">
+                    <div class="spinner"></div>
+                    <div class="overview"></div>
+                    <div class="board"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        $('.board').each(function() {
+            for (y = 0; y < 10; y++) {
+                for (x = 0; x < 10; x++) {
+                    $(this).append('<div data-x="'+x+'" data-y="'+y+'" class="square"></div>');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
