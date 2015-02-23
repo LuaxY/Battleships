@@ -1,22 +1,26 @@
 var http_port = 81;
-var io_port   = 82;
 
 var express = require('express');
-var fs      = require('fs');
-var io      = require('socket.io')(io_port);
-
-var app = express();
+var app  = express();
+var http = require('http').Server(app);
+var io   = require('socket.io')(http);
+var fs   = require('fs');
 
 app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/game', function(req, res) {
     fs.readFile('html/game.html', function(err, data) {
+        console.log('[http] game page requested');
         res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
         res.write(data);
         res.end();
-    })
+    });
 });
 
-app.listen(http_port);
+io.on('connection', function(socket) {
+    console.log('[ io ] new user connected');
+});
 
-console.log('Battleships server running at http://127.0.0.1:' + http_port);
+http.listen(http_port, function() {
+    console.log('[http] battleships server running at http://127.0.0.1:' + http_port);
+});
