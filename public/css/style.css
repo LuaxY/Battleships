@@ -99,5 +99,42 @@ body {
 }
 
 .radar .board .ship {
+    position: absolute;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
 
+.destroyer {
+    background-image: url('../imgs/destroyer.png');
+}
+
+.sub {
+    background-image: url('../imgs/sub.png');
+}
+
+.battleship {
+    background-image: url('../imgs/battleship.png');
+}
+
+.carrier {
+    background-image: url('../imgs/carrier.png');
+}
+
+.patrol {
+    background-image: url('../imgs/patrol.png');
+}
+
+.hit {
+    background-image: url('../imgs/hit.png');
+}
+
+.miss {
+    background-image: url('../imgs/miss.png');
+}
+
+.vertical {
+  transform-origin: 0 0;
+  transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  -webkit-transform-origin: 0 0;
 }
