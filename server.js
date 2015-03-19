@@ -10,7 +10,7 @@ app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/', function(req, res) {
     fs.readFile('html/index.html', function(err, data) {
-        console.log('[http] game page requested');
+        console.log('[http] index page requested');
         res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
         res.write(data);
         res.end();
