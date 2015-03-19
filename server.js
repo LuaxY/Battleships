@@ -26,8 +26,26 @@ app.get('/game', function(req, res) {
     });
 });
 
+/*** DEVELOPPEMENT ***/
+app.get('/socket', function(req, res) {
+    fs.readFile('html/socket.html', function(err, data) {
+        console.log('[http] socket test page requested');
+        res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
+        res.write(data);
+        res.end();
+    });
+});
+/*********************/
+
 io.on('connection', function(socket) {
     console.log('[ io ] new user connected');
+
+    socket.on('search-game', function(data) {
+        console.log('[ io ] Matchmaking');
+
+        socket.emit('search-game-success', { enemy: 'nobody' });
+        //socket.emit('search-game-failed', { error: '...' });
+    });
 });
 
 http.listen(http_port, function() {
