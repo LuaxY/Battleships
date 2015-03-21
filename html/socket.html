@@ -10,7 +10,7 @@
 <body>
     <script>
         var socket = io();
-        socket.emit('search-game', { pseudo: 'test' });
+        socket.emit('search-game', { username: 'test' });
 
         socket.on('search-game-success', function(data) {
             alert('Ok');

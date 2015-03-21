@@ -6,34 +6,35 @@ var http = require('http').Server(app);
 var io   = require('socket.io')(http);
 var fs   = require('fs');
 
+var usernames = {};
+var rooms = [];
+
+rooms['wait'] = {};
+
 app.use('/static', express.static(__dirname + '/public'));
 
-app.get('/', function(req, res) {
-    fs.readFile('html/index.html', function(err, data) {
-        console.log('[http] index page requested');
+function sendPage(page, res) {
+    fs.readFile(page, function(err, data) {
         res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
         res.write(data);
         res.end();
     });
+}
+
+app.get('/', function(req, res) {
+    console.log('[http] index page requested');
+    sendPage('html/index.html', res);
 });
 
 app.get('/game', function(req, res) {
-    fs.readFile('html/game.html', function(err, data) {
-        console.log('[http] game page requested');
-        res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
-        res.write(data);
-        res.end();
-    });
+    console.log('[http] game page requested');
+    sendPage('html/game.html', res);
 });
 
 /*** DEVELOPPEMENT ***/
 app.get('/socket', function(req, res) {
-    fs.readFile('html/socket.html', function(err, data) {
-        console.log('[http] socket test page requested');
-        res.writeHead(200, {'Content-Type': 'text/html', 'Content-Length': data.length});
-        res.write(data);
-        res.end();
-    });
+    console.log('[http] test page requested');
+    sendPage('html/socket.html', res);
 });
 /*********************/
 
@@ -41,10 +42,27 @@ io.on('connection', function(socket) {
     console.log('[ io ] new user connected');
 
     socket.on('search-game', function(data) {
-        console.log('[ io ] Matchmaking');
+        socket.username = data.username;
+        socket.room = 'wait';
+        socket.join('wait');
 
-        socket.emit('search-game-success', { enemy: 'nobody' });
+        usernames[data.username] = data.username;
+        rooms['wait'][data.username] = data.username;
+
+        console.log('[ io ] '+data.username+' join waiting room');
+        // TODO: search enemy
+        //socket.emit('search-game-success', { enemy: 'nobody' });
         //socket.emit('search-game-failed', { error: '...' });
+
+        for(var user in rooms['wait']) {
+            console.log('Username: ' + user);
+        }
+    });
+
+    socket.on('disconnect', function() {
+        console.log(socket.username+' leave game');
+        socket.leave(socket.room);
+        delete rooms[socket.room][socket.username];
     });
 });
 
