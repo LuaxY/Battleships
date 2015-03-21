@@ -62,9 +62,12 @@ io.on('connection', function(socket) {
     });
 
     socket.on('disconnect', function() {
-        console.log(socket.username+' leave game');
-        socket.leave(socket.room);
-        delete rooms[socket.room][socket.username];
+        if (typeof socket.username !== 'undefined')
+        {
+            console.log(socket.username+' leave game');
+            socket.leave(socket.room);
+            delete rooms[socket.room][socket.username];
+        }
     });
 });
 
