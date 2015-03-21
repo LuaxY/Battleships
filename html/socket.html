@@ -8,16 +8,22 @@
     <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
 </head>
 <body>
+    Username: <input type="text" id="username"> <button id="play">Play!</button>
     <script>
-        var socket = io();
-        socket.emit('search-game', { username: 'test' });
 
-        socket.on('search-game-success', function(data) {
-            alert('Ok');
-        });
+        $('#play').click(function() {
+            var socket = io();
+            var username = $("#username").val();
 
-        socket.on('search-game-failed', function(data) {
-            alert('Fail');
+            socket.emit('search-game', { username: username });
+
+            socket.on('search-game-success', function(data) {
+                alert('Ok');
+            });
+
+            socket.on('search-game-failed', function(data) {
+                alert('Fail');
+            });
         });
     </script>
 </body>

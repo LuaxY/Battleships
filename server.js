@@ -42,12 +42,14 @@ io.on('connection', function(socket) {
     console.log('[ io ] new user connected');
 
     socket.on('search-game', function(data) {
+        // TODO: check if username is already used
+
         socket.username = data.username;
         socket.room = 'wait';
         socket.join('wait');
 
         usernames[data.username] = data.username;
-        rooms['wait'][data.username] = data.username;
+        rooms['wait'][data.username] = socket;
 
         console.log('[ io ] '+data.username+' join waiting room');
         // TODO: search enemy
